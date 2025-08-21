@@ -29,3 +29,17 @@ type UserRepository interface {
 	UpdateUser(ctx context.Context, user *User) error
 	DeleteUser(ctx context.Context, id uuid.UUID) error
 }
+
+type UserService interface {
+	RegisterUser(ctx context.Context, user *SignupRequest) error
+}
+type UserController interface {
+	SignUp(ctx context.Context, user *SignupRequest) error
+}
+
+type SignupRequest struct {
+	FullName string `json:"full_name" binding:"required"`
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required,min=8"`
+	Role     string `json:"role" binding:"required"`
+}
